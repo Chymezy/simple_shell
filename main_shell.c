@@ -1,44 +1,38 @@
 #include "command.h"
 
-int main(int ac, char **av)
+/**
+ * main - this is the main function
+ * @argc: number of arguments that been passed to the main
+ * @argv: represents the command and it's arguments
+ * @env: represtns global enviroments
+ * Return: returns intiger
+*/
+
+int main(int argc, char **argv, char **env)
 {
-<<<<<<< HEAD
-    state_t data[] = { DATA_INIT };
-    (void)ac; (void)av;
-    
-    shell_loop(data, av);
-    
-    return (0);
-=======
 	(void)argc;
 	char **enviroment = NULL;
-	/*char prompt = "$ ";*/
 	ssize_t n = 0;
-	char *buffer = NULL;
-	size_t buffer_size;
-	char *token = NULL;
-	char *new_token = NULL;
+	char *buffer = NULL; size_t buffer_size;
+	char *token = NULL; char *new_token = NULL;
 	int count = 0;
 	char *buffer_copy = NULL;
-	int i = 0;
-	int j;
-	char *key = NULL;
-	char *value = NULL;
+	int i = 0; int j;
+	char *key = NULL; char *value = NULL;
 
-	while(1)
-	{
-		enviroment = env;
-		for(i = 0; enviroment[i] != NULL; i++)
+	enviroment = env;
+	for(i = 0; enviroment[i] != NULL; i++)
 		{
 			key = strtok(enviroment[i], "=");
 			if(_strcmp(key, "PATH") == 0)
 			{
 				value = strtok(NULL, "=");
 				break;
-
 			}
-
 		}
+
+	while(1)
+	{
 		if (isatty(STDIN_FILENO))
 		
 			write(1, "$ ", 1);
@@ -48,9 +42,6 @@ int main(int ac, char **av)
 		if (n == -1)
 		{
 			write(1, "\n", 1);
-			/*free(buffer);
-			free(buffer_copy);
-			return (-1);*/
 			break;
 		}
 		else
@@ -100,6 +91,5 @@ int main(int ac, char **av)
 		}	
 	}
 	return(0);
->>>>>>> 40142db55b204238a1602246e4729334d39fc750
 }
 
