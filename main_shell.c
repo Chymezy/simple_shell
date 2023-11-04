@@ -1,4 +1,4 @@
-#include "command.h"
+#include "shell.h"
 
 /**
  * main - this is the main function
