@@ -6,13 +6,14 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 
 void _execute(char *command, char **argv, char *paths);
-char *getpath(char *command, char, char *paths);
+char *getpath(char *command, char *paths);
 char *_strcat(char *string, char *add);
-char *_strcmp(char *first, char *second);
+int _strcmp(char *first, char *second);
 char *_strdup(char *des, char *orig);
-char *strcpy(char *des, char *orig);
+char *_strcpy(char *des, char *orig);
 int _strlen(char *string);
 
 #endif

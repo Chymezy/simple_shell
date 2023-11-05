@@ -15,7 +15,7 @@ char *_strcat(char *string, char *add)
 	{
 		;
 	}
-	for(j = 0; arg[j] != '\0'; i++)
+	for(j = 0; add[j] != '\0'; i++)
 	{
 		string[i] = add[j];
 		i++;

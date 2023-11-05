@@ -1,4 +1,4 @@
-#include "shell_m_u.h"
+#include "shell.h"
 /**
  * getpath - to get the whole path of the command
  * @command: the command we need to get the path of it
@@ -12,31 +12,30 @@ char *getpath(char *command, char *paths)
 	char *copy;
 	struct stat file_status;
 
-	copy = malloc(sizeof(char) * (_strlen(paths) + 1));
-	_strcpy(copy, paths);
-	commandlength = _strlen(command);
-	pathToken_shell = strtok(copy_ptr, ":");
+	copy = malloc(sizeof(char) * (strlen(paths) + 1));
+	strcpy(copy, paths);
+	commandlength = strlen(command);
+	pathToken_shell = strtok(copy, ":");
 	while (pathToken_shell != NULL)
 	{
 		directorylen = _strlen(pathToken_shell);
 		wholefile_path = malloc(sizeof(char) * (directorylen + commandlength + 2));
-		_strcpy(wholefile_path, pathToken_shell);
-		_strcat(wholefile_path, "/");
-		_strcat(wholefile_path, command);
-		_strcat(wholefile_path, "\0");
+		strcpy(wholefile_path, pathToken_shell);
+		strcat(wholefile_path, "/");
+		strcat(wholefile_path, command);
+		strcat(wholefile_path, "\0");
 		if (stat(wholefile_path, &file_status) == 0)
 		{
-			free(copy);
+			//free(copy);
 			return (wholefile_path);
 		}
 		else
 		{
-			free(copy);
-			free(wholefile_path);
+			//free(wholefile_path);
 			pathToken_shell = strtok(NULL, ":");
 		}
 	}
-	free(copy);
+	//free(copy);
 	if (stat(command, &file_status) == 0)
 		return (command);
 	return (NULL);

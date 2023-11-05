@@ -13,7 +13,8 @@ int main(int argc, char **argv, char **env)
 	(void)argc;
 	char **enviroment = NULL;
 	ssize_t n = 0;
-	char *buffer = NULL; size_t buffer_size;
+	char *buffer = NULL;
+	size_t buffer_size;
 	char *token = NULL; char *new_token = NULL;
 	int count = 0;
 	char *buffer_copy = NULL;
@@ -24,7 +25,7 @@ int main(int argc, char **argv, char **env)
 	for(i = 0; enviroment[i] != NULL; i++)
 		{
 			key = strtok(enviroment[i], "=");
-			if(_strcmp(key, "PATH") == 0)
+			if(strcmp(key, "PATH") == 0)
 			{
 				value = strtok(NULL, "=");
 				break;
@@ -37,59 +38,80 @@ int main(int argc, char **argv, char **env)
 		
 			write(1, "$ ", 1);
 		n = getline(&buffer, &buffer_size, stdin);
+		printf("this is the buffer : %s", buffer);
 		buffer_copy = malloc(sizeof(char) * buffer_size);
-		strcpy(buffer_copy, buffer);
+		_strcpy(buffer_copy, buffer);
+		printf("this is buffer_copy: %s", buffer_copy);
 		if (n == -1)
 		{
 			write(1, "\n", 1);
 			break;
 		}
-		else
+		token = strtok(buffer, " \n\t");
+		printf("this is command token :%s\n", token);
+		while(token != NULL)
 		{
-			token = strtok(buffer, " \n");
-			while(token != NULL)
-			{
-				count++;
-				token = strtok(NULL, " \n");
-			}
 			count++;
-			argv = malloc(sizeof(char *) * count);
-			if (argv == NULL)
+			token = strtok(NULL, " \n\t");
+			printf("this is arguments tokens :%s\n", token);
+		}
+		count++;
+		argv = malloc(sizeof(char *) * count);
+		if (argv == NULL)
+		{
+			free(buffer);
+			printf(" buffer after free is now : %s", buffer);
+			free(buffer_copy);
+			perror("ERROR: memory can't be allocated");
+			return(-1);
+		}
+		new_token = strtok(buffer_copy, " \n\t");
+		while(new_token != NULL)
+		{
+			argv[i] = malloc(sizeof(char) * (strlen(new_token) + 1));
+			if(argv[i] == NULL)
 			{
+				for(j = 0; j < i; j++)
+			 	{
+					free(argv[j]);			
+				}
+				free(argv);
 				free(buffer);
 				free(buffer_copy);
+				perror("ERROR: memory can't be allocated");
 				return(-1);
+					
 			}
-			new_token = strtok(buffer_copy, " \n");
-			while(new_token != NULL)
-			{
-				argv[i] = malloc(sizeof(char) * (strlen(new_token) + 1));
-				if(argv[i] == NULL)
-				{
-					for(j = 0; j < i; j++)
-					{
-						free(argv[j]);
-					}
-					free(argv);
-					free(buffer);
-					free(buffer_copy);
-					return(-1);
-				}
-				strcpy(argv[i], new_token);
-				new_token = strtok(NULL, " \n");
-				i++;
-			}
-			argv[i] = NULL;
-			_execute(argv[0], argv, value);
-			for(i = 0; argv[i] != NULL; i++)
-			{
-				free(argv[i]);
-			}
-			free(argv);
-			free(buffer);
-			free(buffer_copy);
-		}	
+			_strcpy(argv[i], new_token);
+			printf("this is argv[i] after strcpy: %s\n", argv[i]);
+
+			new_token = strtok(NULL, " \n\t");
+			i++;
+		}
+		argv[i] = NULL;
+		for(i= 0; argv[i] != NULL; i++)
+		{
+			printf(" this is argv before execution %s\n", argv[i]);
+		}
+		execve(argv[0], argv, NULL);
+		/*for(i = 0; argv[i] != NULL; i++)
+		{
+			free(argv[i]);
+		}
+		free(argv);
+		free(buffer);
+		free(buffer_copy);*/
 	}
+	for(i = 0; argv[i] != NULL; i++)
+	{
+		free(argv[i]);
+		printf("this argv[i] after free %s\n", argv[i]);
+	}
+	free(argv);
+	printf(" this is argv after free : %p\n", argv);
+	free(buffer);
+	printf(" this is buffer after free %s\n", buffer);
+	free(buffer_copy);
+	printf("this is buffer_copy after free %s\n", buffer_copy);
 	return(0);
 }
-

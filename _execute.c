@@ -11,8 +11,8 @@
 
 void _execute(char *command, char **argv, char *paths)
 {
-	pid_t child_process;
-	char *command_path;
+	pid_t child_pid;
+	char *command_path = NULL;
 	int status;
 	
 	command_path= getpath(command, paths);
@@ -21,7 +21,7 @@ void _execute(char *command, char **argv, char *paths)
 	if(child_pid == -1)
 	{
 		perror("ERROR: process couldn't be created");
-		exit(1);
+		_exit(1);
 	}
 	if(execve(command_path, argv, NULL) == -1)
 	{
@@ -31,8 +31,9 @@ void _execute(char *command, char **argv, char *paths)
 	}
 	else
 	{
-		wait(&status)
+		wait(&status);
 	}
+	//free(command_path);
 
 
 }
