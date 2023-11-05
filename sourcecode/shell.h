@@ -2,7 +2,7 @@
 #define SHELL_H
 
 #define BUFFER_MAX 1024
-#define DELIMER " \n\t"
+#define DEL " \n\t"
 
 /* FUNCTION PROTOTYPES */
 void run_shell(char **argv);
