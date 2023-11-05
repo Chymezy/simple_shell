@@ -1,8 +1,9 @@
 #include "shell.h"
 
 /**
+ * readline - Reads user input
  *
- *
+ * Return: user input pointer.
  */
 char *readline(void);
 {
@@ -40,4 +41,17 @@ char *check_comment(char *input)
 		*comment_point = '\0';
 	}
 	return (input);
+}
+/**
+ *
+ */
+char **split_input(char *input)
+{
+	char *token;
+	char **tok_address;
+	int counter;
+	char *input_cpy;
+
+	input _cpy = _strdup(input); /* Rember to free _strdup) */
+	token = strtok(input,
 }
