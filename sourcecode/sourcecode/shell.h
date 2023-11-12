@@ -38,12 +38,6 @@ char *read_line(void);
 char **split_input(char *input);
 /* STRING FUNCTION PROTOTYPES */
 /*void errorPrint(const char *str);*/
-void printString(const char *str);
-int _strlen(char *string);
-/*char *_strstr(char *haystack, char *needle)a;
-char *_strdup(char *);*/
-/*int _help(char **argv);
-int _exit(char **argv);
-int _env(char **argv);
-int _cd(char **argv);*/
+/**void printString(const char *str);*/
+int _env(state_t *state);
 #endif /* This a shell header*/

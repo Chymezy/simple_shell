@@ -26,6 +26,7 @@ int exec(state_t *state, char **input_string)
 	}*/
 	return (fork_process(state, input_string));
 }
+
 /**
  * fork_process - creates a child process
  * @input_string: contains command and flags
@@ -45,6 +46,10 @@ int fork_process(state_t *state, char **input_string)
 	if (get_pid == 0)
 	{
 		command = input_string[0];
+		if (strcmp(command, "env") == 0)
+		{
+			_env(state);
+		}
 		actual_command = get_location(state, command);
 		if (execve(actual_command, input_string, NULL) == -1)
 		{
@@ -67,12 +72,20 @@ int fork_process(state_t *state, char **input_string)
 	}
 	return (-1);
 }
+
+/**
+ * _getenv - custmize function for getenv()
+ * @name: name of the enviroment
+ * @state: struct the contain global enviroment
+ * Return: value of the enviroment
+*/
+
 char *_getenv(char *name, state_t *state)
 {
-	char **env_copy;
+	char **env_copy = NULL;
 	int i = 0;
 	int count = 0;
-	char *key, *value;
+	char *key = NULL, *value = NULL;
 
 	count = 0;
 	key = NULL;
@@ -83,7 +96,9 @@ char *_getenv(char *name, state_t *state)
 	env_copy = malloc(sizeof(char *) * count);
 	for (i = 0; state->env[i] != NULL; i++)
 	{
-		env_copy[i] = state->env[i];
+		env_copy[i] = malloc(sizeof(char) * (strlen(state->env[i]) + 1));
+		strcpy(env_copy[i], state->env[i]);
+
 	}
 	env_copy[i] = NULL;
 	for(i = 0; env_copy[i] != NULL; i++)

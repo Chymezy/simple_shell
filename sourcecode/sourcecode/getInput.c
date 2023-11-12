@@ -17,6 +17,7 @@ char *read_line(void)
 	if (r == -1)
 	{
 		free(input);
+		write(1, "\n", 1);
 		exit(0);
 	}
 	return (input);
