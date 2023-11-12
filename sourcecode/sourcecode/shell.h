@@ -40,4 +40,5 @@ char **split_input(char *input);
 /*void errorPrint(const char *str);*/
 /**void printString(const char *str);*/
 int _env(state_t *state);
+void _exit_t(void);
 #endif /* This a shell header*/

@@ -29,6 +29,7 @@ int exec(state_t *state, char **input_string)
 
 /**
  * fork_process - creates a child process
+ * @state: struct
  * @input_string: contains command and flags
  *
  * Return: 1 on success or ) on failure
@@ -47,9 +48,9 @@ int fork_process(state_t *state, char **input_string)
 	{
 		command = input_string[0];
 		if (strcmp(command, "env") == 0)
-		{
 			_env(state);
-		}
+		if (strcmp(command, "exit") == 0)
+			_exit_t();
 		actual_command = get_location(state, command);
 		if (execve(actual_command, input_string, NULL) == -1)
 		{
@@ -59,7 +60,6 @@ int fork_process(state_t *state, char **input_string)
 			write(2, ": not found\n", 12);
 			exit(127);
 		}
-		/*exit(1);*/
 	}
 	else if (get_pid < 0)
 	{
@@ -101,10 +101,10 @@ char *_getenv(char *name, state_t *state)
 
 	}
 	env_copy[i] = NULL;
-	for(i = 0; env_copy[i] != NULL; i++)
+	for (i = 0; env_copy[i] != NULL; i++)
 	{
 		key = strtok(env_copy[i], "=");
-		if(strcmp(key, name) == 0)
+		if (strcmp(key, name) == 0)
 		{
 			value = strtok(NULL, "=");
 			break;

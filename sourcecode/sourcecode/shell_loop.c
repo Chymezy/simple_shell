@@ -2,7 +2,7 @@
 
 /**
  * run_shell - This the shell loop
- * @argv: commandline vector
+ * @state: commandline vector
  * Return: void
  */
 void run_shell(state_t *state)
@@ -19,28 +19,20 @@ void run_shell(state_t *state)
 
 /**
  * interactive - This function handles interct. mode of shell
- * @argv: the argument vector;
+ * @state: the argument vector;
  *
  * Return void
  */
 void interactive(state_t *state)
 {
-	char *prompt;
-	char *input;
-	char **input_string;
-	int status;
-	int i;
+	char *prompt = "$ ";
+	char *input = NULL;
+	char **input_string = NULL;
+	int status = -1;
+	int i = 0;
 
-	status = -1;
-	i = 0;
-	prompt = "$ ";
-	input = NULL;
-	input_string = NULL;
 	while (1)
 	{
-		/*write(STDOUT_FILENO, prompt, _strlen(prompt));*/
-		/*printString(prompt);*/
-		fflush(stdin);
 		printf("%s", prompt);
 		input = read_line();
 		input_string = split_input(input);
@@ -59,7 +51,7 @@ void interactive(state_t *state)
 }
 /**
  * non_interactive - This function handles non-interct mode of shell
- * @argv: the argument vector
+ * @state: the argument vector
  *
  * returns void
  */
@@ -74,12 +66,12 @@ void non_interactive(state_t *state)
 	input_string = split_input(input);
 	status = exec(state, input_string);
 	free(input);
-	while(input_string[i] != NULL)
+	while (input_string[i] != NULL)
 	{
 		free(input_string[i]);
 		i++;
 	}
 	free(input_string);
-	if(status >= 0)
+	if (status >= 0)
 		exit(status);
 }

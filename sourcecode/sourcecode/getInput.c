@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * readline - Reads user input
+ * read_line - Reads user input
  *
  * Return: user input pointer.
  */
@@ -33,18 +33,13 @@ char **split_input(char *input)
 {
 	char *token = NULL;
 	char **tok_address = NULL;
-	int counter;
-	int split_buffer;
+	int counter = 0;
+	int split_buffer = 64;
 
-	split_buffer = 64;
-	counter = 0;
 	tok_address = malloc(split_buffer * sizeof(char *));
 	if (tok_address == NULL)
 	{
-		/*errorPrint("allocation error in split_input");
-		errorPrint("\n");*/
 		fprintf(stderr, "allocationn error in split_input");
-		/*exit(1);*/
 		exit(1);
 	}
 	token = strtok(input, DEL);
