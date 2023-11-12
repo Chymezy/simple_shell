@@ -67,11 +67,11 @@ int fork_process(state_t *state, char **input_string)
 	}
 	return (-1);
 }
-char *_getenv(state_t *state, char *enviroment)
+char *_getenv(char *name, state_t *state)
 {
 	char **env_copy;
-	int i;
-	int count;
+	int i = 0;
+	int count = 0;
 	char *key, *value;
 
 	count = 0;
@@ -89,15 +89,16 @@ char *_getenv(state_t *state, char *enviroment)
 	for(i = 0; env_copy[i] != NULL; i++)
 	{
 		key = strtok(env_copy[i], "=");
-		if(strcmp(key, enviroment) == 0)
+		if(strcmp(key, name) == 0)
 		{
 			value = strtok(NULL, "=");
 			break;
 		}
 	}
-	/*for (i = 0; env_copy[i] != NULL; i++)
+	for (i = 0; env_copy[i] != NULL; i++)
 	{
 		free(env_copy[i]);
-	}*/
+	}
+	free(env_copy);
 	return (value);
 }

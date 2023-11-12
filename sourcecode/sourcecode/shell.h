@@ -28,7 +28,7 @@ typedef struct shellstate
 void run_shell(state_t *state);
 void interactive(state_t *state);
 void non_interactive(state_t *state);
-char *_getenv(state_t *state, char *environment);
+char *_getenv(char *name, state_t *state);
 char *get_location(state_t *state, char *command);
 /* EXECUTION FUNCTIONS */
 int exec(state_t *state, char **input_string);

@@ -12,7 +12,7 @@ char *get_location(state_t *state, char *command)
 
 	(void)state;
 
-	path = getenv("PATH");
+	path = _getenv("PATH", state);
 	/*path = _getenv(state, "PATH");*/
 	if (path)
 	{
