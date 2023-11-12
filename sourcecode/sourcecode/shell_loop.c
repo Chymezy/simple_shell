@@ -55,7 +55,7 @@ void interactive(state_t *state)
 		free(input_string);
 		if (status >= 0)
 			exit(status);
-	};
+	}
 }
 /**
  * non_interactive - This function handles non-interct mode of shell
@@ -65,7 +65,21 @@ void interactive(state_t *state)
  */
 void non_interactive(state_t *state)
 {
+	char *input = NULL;
+	char **input_string = NULL;
+	int status;
+	int i = 0;
+
 	input = read_line();
 	input_string = split_input(input);
-	status = exec(state, );
+	status = exec(state, input_string);
+	free(input);
+	while(input_string[i] != NULL)
+	{
+		free(input_string[i]);
+		i++;
+	}
+	free(input_string);
+	if(status >= 0)
+		exit(status);
 }
