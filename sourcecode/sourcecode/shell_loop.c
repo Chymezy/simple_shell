@@ -65,6 +65,7 @@ void interactive(state_t *state)
  */
 void non_interactive(state_t *state)
 {
-	(void)state;
-	printf("Yet to be implemented\n");
+	input = read_line();
+	input_string = split_input(input);
+	status = exec(state, );
 }

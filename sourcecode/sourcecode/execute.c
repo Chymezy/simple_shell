@@ -48,7 +48,11 @@ int fork_process(state_t *state, char **input_string)
 		actual_command = get_location(state, command);
 		if (execve(actual_command, input_string, NULL) == -1)
 		{
-			perror(state->shell_name);
+			write(2, state->shell_name, strlen(state->shell_name));
+			write(2, ": 1: ", 5);
+			write(2, command, strlen(command));
+			write(2, ": not found\n", 12);
+			exit(127);
 		}
 		/*exit(1);*/
 	}
@@ -59,10 +63,6 @@ int fork_process(state_t *state, char **input_string)
 	}
 	else
 	{
-		/*while (!WIFEXITED(status) && !WIFSIGNALED(status))
-		{
-			waitpid(get_pid, &status, WUNTRACED);
-		};*/
 		wait(&status);
 	}
 	return (-1);
