@@ -40,7 +40,7 @@ int fork_process(state_t *state, char **input_string)
 			_env(state);
 		if (_strcmp(command, "exit") == 0)
 		{
-			_exit_t();
+			exit(0);
 		}
 		actual_command = get_location(state, command);
 		if (execve(actual_command, input_string, NULL) == -1)
