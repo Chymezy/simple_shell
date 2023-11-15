@@ -17,6 +17,10 @@ int _env(state_t *state)
 	return (0);
 
 }
+/**
+ *_exit_t - exit shell
+ *Return: void
+*/
 void _exit_t(void)
 {
 

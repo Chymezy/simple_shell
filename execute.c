@@ -8,22 +8,11 @@
  */
 int exec(state_t *state, char **input_string)
 {
-	/*int i;
-	char *builtin_t[];
-	int (*builtin_t[])(char **);
-
-	builtin_t = {"cd", "env", "help", "exit"};
-	int (*builtin_t[])(char **) = {&_cd, &_env, &_help, &_exit};*/
 
 	if (input_string[0] == NULL)
 	{
 		return (-1);
 	}
-	/*for (; i < sizeof(builtin_t) / sizeof(char *); i++)
-	{
-		if (strcmp(input_string[0], builtin_t[i]) == 0)
-			return ((*builtin_t[i](input_string)));
-	}*/
 	return (fork_process(state, input_string));
 }
 

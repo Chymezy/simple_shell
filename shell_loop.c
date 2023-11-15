@@ -37,11 +37,9 @@ void interactive(state_t *state)
 		printString(prompt);
 		if (input != NULL)
 			free(input);
-		/*printString(prompt);*/
 		input = read_line();
 		input_string = split_input(input);
-		status = exec(state, input_string);
-		/*free(input);*/
+		status = exec(state, input_string)
 		i = 0;
 		while (input_string[i] != NULL)
 		{
@@ -79,31 +77,3 @@ void non_interactive(state_t *state)
 	if (status >= 0)
 		exit(status);
 }
-/**
- * signal_interrupt - catches Ctrl+C and, instead of stopping shell,
- * it writes a newline and prompts the user again
- * @signal: input signal to confirm is SIGINT
- */
-/*void signal_interrupt(int signal)
-{
-	char *new_prompt = "\n$ ";
-
-	if (signal == SIGINT)
-	{
-		if (isatty(STDIN))
-			write(STDOUT, new_prompt, _strlen(new_prompt));
-	}
-}*/
-void signal_interrupt(int signnum)
-{
-	char *new_prompt;
-	(void)signnum;
-
-	new_prompt = "$ ";
-	/*if (isatty(STDIN))
-	{
-		printString(new_prompt);
-		printString("\n");
-	}*/
-}
-
