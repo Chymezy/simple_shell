@@ -39,7 +39,8 @@ char **split_input(char *input)
 	tok_address = malloc(split_buffer * sizeof(char *));
 	if (tok_address == NULL)
 	{
-		fprintf(stderr, "allocationn error in split_input");
+		errorPrint("allocationn error in split_input");
+		errorPrint("\n");
 		exit(1);
 	}
 	token = strtok(input, DEL);
@@ -47,7 +48,7 @@ char **split_input(char *input)
 	{
 		if (token[0] == '#')
 			break;
-		tok_address[counter] = strdup(token);
+		tok_address[counter] = _strdup(token);
 		counter++;
 		if (counter >= split_buffer)
 		{
@@ -55,7 +56,8 @@ char **split_input(char *input)
 			tok_address = realloc(tok_address, split_buffer * sizeof(char *));
 			if (tok_address == NULL)
 			{
-				fprintf(stderr, "reallocation error in split_input: tok_add\n");
+				errorPrint("reallocation error in split_input: tok_add");
+				errorPrint("\n");
 				exit(1);
 			}
 		}

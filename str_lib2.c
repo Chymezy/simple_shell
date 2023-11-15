@@ -2,23 +2,60 @@
 
 /**
  * _strdup - duplicates a string
- * @str: the string to duplicate
+ * @src: the string to duplicate
  *
  * Return: pointer to the duplicated string
  */
-char *_strdup(const char *str)
+char *_strdup(char *src)
 {
-	int length = 0;
-	char *ret;
+	size_t length;
+	char *dest;
 
-	if (str == NULL)
+	if (src == NULL)
+	{
+		errno = EINVAL;
 		return (NULL);
-	while (*str++)
-		length++;
-	ret = malloc(sizeof(char) * (length + 1));
-	if (!ret)
+	}
+	length = _strlen(src);
+	dest = (char *)malloc(length + 1);
+
+	if (dest == NULL)
+	{
+		errno = ENOMEM;
 		return (NULL);
-	for (length++; length--;)
-		ret[length] = *--str;
-	return (ret);
+	}
+	_strcpy(dest, src);
+	return (dest);
+}
+/**
+ * printString - Prints strings to stdout
+ * @str: The string to print
+ * returns void
+ */
+void printString(const char *str)
+{
+	size_t len = 0;
+
+	while (str[len] != '\0')
+	{
+		len++;
+	}
+	write(STDOUT_FILENO, str, len);
+	/*write(STDOUT_FILENO, "\n", 1);*/
+}
+/**
+ * errorPrint - Prints strings to stdout
+ * @str: The string to print
+ * returns void
+ */
+void errorPrint(const char *str)
+{
+	size_t len = 0;
+	
+	while (str[len] != '\0')
+	{
+		len++;
+	}
+	write(STDERR_FILENO, str, len);
+	/*write(STDOUT_FILENO, "\n", 1);*/
 }

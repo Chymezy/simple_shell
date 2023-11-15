@@ -26,8 +26,10 @@ int exec(state_t *state, char **input_string)
 	}*/
 	return (fork_process(state, input_string));
 }
+
 /**
  * fork_process - creates a child process
+ * @state: struct
  * @input_string: contains command and flags
  *
  * Return: 1 on success or ) on failure
@@ -35,16 +37,33 @@ int exec(state_t *state, char **input_string)
 int fork_process(state_t *state, char **input_string)
 {
 	pid_t get_pid;
+	char *command, *actual_command;
 	int status;
 
+	command = NULL;
+	actual_command = NULL;
+	status = 0;
 	get_pid = fork();
 	if (get_pid == 0)
 	{
-		if (execvp(input_string[0], input_string) == -1)
+		command = input_string[0];
+		if (_strcmp(command, "env") == 0)
+			_env(state);
+		if (_strcmp(command, "exit") == 0)
 		{
-			perror(state->shell_name);
+			_exit_t();
 		}
-		exit(1);
+		actual_command = get_location(state, command);
+		if (actual_command == NULL)
+			return (-1);
+		if (execve(actual_command, input_string, NULL) == -1)
+		{
+			write(2, state->shell_name, _strlen(state->shell_name));
+			write(2, ": 1: ", 5);
+			write(2, command, _strlen(command));
+			write(2, ": not found\n", 12);
+			exit(127);
+		}
 	}
 	else if (get_pid < 0)
 	{
@@ -53,18 +72,24 @@ int fork_process(state_t *state, char **input_string)
 	}
 	else
 	{
-		do {
-			waitpid(get_pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		wait(&status);
 	}
 	return (-1);
 }
-char *_getenv(state_t *state, char *enviroment)
+
+/**
+ * _getenv - custmize function for getenv()
+ * @name: name of the enviroment
+ * @state: struct the contain global enviroment
+ * Return: value of the enviroment
+*/
+
+char *_getenv(char *name, state_t *state)
 {
-	char **env_copy;
-	int i;
-	int count;
-	char *key, *value;
+	char **env_copy = NULL;
+	int i = 0;
+	int count = 0;
+	char *key = NULL, *value = NULL;
 
 	count = 0;
 	key = NULL;
@@ -75,23 +100,24 @@ char *_getenv(state_t *state, char *enviroment)
 	env_copy = malloc(sizeof(char *) * count);
 	for (i = 0; state->env[i] != NULL; i++)
 	{
-		env_copy[i] = state->env[i];
+		env_copy[i] = malloc(sizeof(char) * (strlen(state->env[i]) + 1));
+		_strcpy(env_copy[i], state->env[i]);
+
 	}
 	env_copy[i] = NULL;
-	for(i = 0; env_copy[i] != NULL; i++)
+	for (i = 0; env_copy[i] != NULL; i++)
 	{
 		key = strtok(env_copy[i], "=");
-		if(strcmp(key, enviroment) == 0)
+		if (_strcmp(key, name) == 0)
 		{
 			value = strtok(NULL, "=");
 			break;
 		}
 	}
-	/*for (i = 0; env_copy[i] != NULL; i++)
+	for (i = 0; env_copy[i] != NULL; i++)
 	{
 		free(env_copy[i]);
-	}*/
+	}
 	free(env_copy);
-	printf("%s\n", value);
 	return (value);
 }

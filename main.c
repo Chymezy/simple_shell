@@ -1,18 +1,20 @@
 #include "shell.h"
-#include <stdio.h>
-/**
- * main - this is the main function
- * @argc: number of arguments that been passed to the main
- * @argv: represents the command and it's arguments
- * @env: represtns global enviroments
- * Return: returns intiger
- */
-int main(int argc, char **argv)
-{
-	(void)argc;
-	(void)argv;
 
-	print("Testing ...", 1);
+/**
+ * main - this is the main shell
+ * @argc: the command line argument count
+ * @argv: the command line argument vector
+ * @env: global enviroment
+ * Return: 0 on success and -1 on failure
+ */
+int main(int argc, char **argv, char **env)
+{
+	state_t state[] = { STATE_INIT };
+
+	state->env = env;
+	state->shell_name = argv[0];
+	(void)argc;
+	run_shell(state);
 
 	return (0);
 }
