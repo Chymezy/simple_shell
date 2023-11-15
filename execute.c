@@ -43,14 +43,12 @@ int fork_process(state_t *state, char **input_string)
 			_exit_t();
 		}
 		actual_command = get_location(state, command);
-		if (actual_command == NULL)
-			return (-1);
 		if (execve(actual_command, input_string, NULL) == -1)
 		{
-			write(2, state->shell_name, _strlen(state->shell_name));
-			write(2, ": 1: ", 5);
-			write(2, command, _strlen(command));
-			write(2, ": not found\n", 12);
+			write(1, state->shell_name, _strlen(state->shell_name));
+			write(1, ": 1: ", 5);
+			write(1, command, _strlen(command));
+			write(1, ": not found\n", 12);
 			exit(127);
 		}
 	}
