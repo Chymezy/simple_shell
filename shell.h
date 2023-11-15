@@ -40,6 +40,8 @@ int fork_process(state_t *state, char **input_string);
 /* DATA CLEANING FUNCTIONS */
 char *read_line(void);
 char **split_input(char *input);
+void *_memcpy(void *target, const void *source, size_t size);
+void *_realloc(void *ptr, size_t size);
 /* PRINTING FUNCTION PROTOTYPES */
 void errorPrint(const char *str);
 void printString(const char *str);
