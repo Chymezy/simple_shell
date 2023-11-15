@@ -41,7 +41,6 @@ void printString(const char *str)
 		len++;
 	}
 	write(STDOUT_FILENO, str, len);
-	/*write(STDOUT_FILENO, "\n", 1);*/
 }
 /**
  * errorPrint - Prints strings to stdout
@@ -57,5 +56,4 @@ void errorPrint(const char *str)
 		len++;
 	}
 	write(STDERR_FILENO, str, len);
-	/*write(STDOUT_FILENO, "\n", 1);*/
 }
