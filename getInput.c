@@ -53,7 +53,7 @@ char **split_input(char *input)
 		if (counter >= split_buffer)
 		{
 			split_buffer += split_buffer;
-			tok_address = realloc(tok_address, split_buffer * sizeof(char *));
+			tok_address = _realloc(tok_address, split_buffer * sizeof(char *));
 			if (tok_address == NULL)
 			{
 				errorPrint("reallocation error in split_input: tok_add");
