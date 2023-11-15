@@ -31,7 +31,7 @@ typedef struct shellstate
 void run_shell(state_t *state);
 void interactive(state_t *state);
 void non_interactive(state_t *state);
-void signal_interrupt(int signnum);
+/*void signal_interrupt(int signnum);*/
 char *_getenv(char *name, state_t *state);
 char *get_location(state_t *state, char *command);
 /* EXECUTION FUNCTIONS */

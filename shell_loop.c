@@ -39,7 +39,7 @@ void interactive(state_t *state)
 			free(input);
 		input = read_line();
 		input_string = split_input(input);
-		status = exec(state, input_string)
+		status = exec(state, input_string);
 		i = 0;
 		while (input_string[i] != NULL)
 		{
