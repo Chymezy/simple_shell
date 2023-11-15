@@ -31,7 +31,6 @@ void interactive(state_t *state)
 	int status = -1;
 	int i = 0;
 
-	signal(SIGINT, signal_interrupt);
 	while (1)
 	{
 		printString(prompt);
