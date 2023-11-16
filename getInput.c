@@ -9,22 +9,16 @@ char *read_line(void)
 {
 	char *input = NULL;
 	size_t size;
+	ssize_t r;
 
+	r = 0;
 	size = 0;
-	if (getline(&input, &size, stdin) == -1)
+	r = getline(&input, &size, stdin);
+	if (r == -1)
 	{
-		if (feof(stdin))
-		{
-			free(input);
-			errorPrint("\n");
-			exit(EXIT_SUCCESS);
-		}
-		else
-		{
-			free(input);
-			errorPrint("error reading input");
-			exit(EXIT_FAILURE);
-		}
+		free(input);
+		write(1, "\n", 1);
+		exit(0);
 	}
 	return (input);
 }
@@ -84,7 +78,7 @@ char **split_input(char *input)
 void *_memcpy(void *target, const void *source, size_t size)
 {
 	const char *s;
-	char *t;
+	char *t;	
 
 	if (target == NULL || source == NULL)
 		return (NULL);
@@ -144,3 +138,5 @@ void *_realloc(void *ptr, size_t size)
 		return (new_ptr);
 	}
 }
+
+

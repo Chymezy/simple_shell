@@ -31,7 +31,6 @@ typedef struct shellstate
 void run_shell(state_t *state);
 void interactive(state_t *state);
 void non_interactive(state_t *state);
-void signal_interrupt(int signum);
 /*void signal_interrupt(int signnum);*/
 char *_getenv(char *name, state_t *state);
 char *get_location(state_t *state, char *command);
@@ -40,7 +39,6 @@ int exec(state_t *state, char **input_string);
 int fork_process(state_t *state, char **input_string);
 /* DATA CLEANING FUNCTIONS */
 char *read_line(void);
-char *read_stream(void);
 char **split_input(char *input);
 void *_memcpy(void *target, const void *source, size_t size);
 void *_realloc(void *ptr, size_t size);

@@ -27,7 +27,7 @@ int fork_process(state_t *state, char **input_string)
 {
 	pid_t get_pid;
 	char *command, *actual_command;
-	int i, status;
+	int status;
 
 	command = NULL;
 	actual_command = NULL;
@@ -43,26 +43,12 @@ int fork_process(state_t *state, char **input_string)
 			exit(0);
 		}
 		actual_command = get_location(state, command);
-		if (actual_command == NULL)
-		{
-			printString(state->shell_name);
-			printString(": 1: not found");
-			printString("\n");
-			return(-1);
-		}
 		if (execve(actual_command, input_string, NULL) == -1)
 		{
-			/*write(1, state->shell_name, _strlen(state->shell_name));
+			write(1, state->shell_name, _strlen(state->shell_name));
 			write(1, ": 1: ", 5);
 			write(1, command, _strlen(command));
-			write(1, ": not found\n", 12);*/
-			i = 0;
-			while (input_string[i] != NULL)
-			{
-				free(input_string[i]);
-				i++;
-			}
-			free(input_string);
+			write(1, ": not found\n", 12);
 			exit(127);
 		}
 	}
