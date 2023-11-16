@@ -78,7 +78,7 @@ char **split_input(char *input)
 void *_memcpy(void *target, const void *source, size_t size)
 {
 	const char *s;
-	char *t;	
+	char *t;
 
 	if (target == NULL || source == NULL)
 		return (NULL);
